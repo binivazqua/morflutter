@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 /* FIREBASE REQUIRED IMPORTS */
 import 'package:firebase_core/firebase_core.dart';
+import 'package:morflutter/starting_pages/auth/loginPage.dart';
 import 'package:morflutter/starting_pages/tests/sendAndFetch.dart';
 import 'firebase_options.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 /*
 void main() async {
@@ -46,7 +48,8 @@ class MainApp extends StatelessWidget {
                   'There is a fuckin error around here: ${snapshot.error.toString()}');
               return Text('Somethin went wrong!!!');
             } else if (snapshot.hasData) {
-              return SendAndfetch();
+              //return SendAndfetch();
+              return MorfoLoginPage();
             } else {
               return Center(child: CircularProgressIndicator());
             }
