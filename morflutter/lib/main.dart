@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 /* FIREBASE REQUIRED IMPORTS */
 import 'package:firebase_core/firebase_core.dart';
 import 'package:morflutter/starting_pages/auth/loginPage.dart';
+import 'package:morflutter/starting_pages/auth/mainPage.dart';
 import 'package:morflutter/starting_pages/tests/sendAndFetch.dart';
 import 'firebase_options.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -49,7 +50,7 @@ class MainApp extends StatelessWidget {
               return Text('Somethin went wrong!!!');
             } else if (snapshot.hasData) {
               //return SendAndfetch();
-              return MorfoLoginPage();
+              return MainPage();
             } else {
               return Center(child: CircularProgressIndicator());
             }
