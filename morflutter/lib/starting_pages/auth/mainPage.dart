@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:morflutter/starting_pages/auth/loggedPage.dart';
 import 'package:morflutter/starting_pages/auth/loginPage.dart';
 import 'package:morflutter/starting_pages/tests/sendAndFetch.dart';
 
@@ -13,8 +14,10 @@ class MainPage extends StatelessWidget {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return SendAndfetch();
+                print('SIGNED IN');
+                return LoggedPage();
               } else {
+                print('NOT SIGNED IN');
                 return MorfoLoginPage();
               }
             }));

@@ -18,6 +18,7 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim());
+    print("FUNCTION DOING ITS THING...");
   }
 
   // CREATE A DISPOSE METHOD FOR MEMORY PURPOSES:

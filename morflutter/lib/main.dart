@@ -39,7 +39,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //return MaterialApp(home: MainPage());
     //return SendAndfetch();
+
     return MaterialApp(
       home: FutureBuilder(
           future: myApp,
