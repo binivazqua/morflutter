@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:morflutter/components/texFil.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -11,10 +13,13 @@ class RegisterPage extends StatefulWidget {
 
 class RegisterPageState extends State<RegisterPage> {
   // FIREBASE REAL TIME DATABASE USER INFORMATION:
+  final _MorfoDatabase = FirebaseDatabase.instance.ref('users');
 
   // CREATE USER CONRTOLLERS:
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _lastnameController = TextEditingController();
 
   // CREATE A DISPOSE METHOD FOR MEMORY PURPOSES:
   @override
@@ -22,6 +27,36 @@ class RegisterPageState extends State<RegisterPage> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  // SEND USER DATA FUNCTION:
+  void sendUserData() {
+    /*_MorfoDatabase.child('user #')
+        .set({
+          'user name': _nameController.text.trim(),
+          'user_lastname': _lastnameController.text.trim(),
+          'user_email': _emailController.text.trim(),
+          'user_password': _passwordController.text.trim(),
+          'user_id': 'none',
+        })
+        .then((_) => print('Data values have been sent!'))
+        .catchError((error) => print('Something didnt work! Error: $error'), );
+    ;*/
+
+    try {
+      _MorfoDatabase.child('user #').set({
+        'user name': _nameController.text.trim(),
+        'user_lastname': _lastnameController.text.trim(),
+        'user_email': _emailController.text.trim(),
+        'user_password': _passwordController.text.trim(),
+        'user_id': 'none',
+      });
+      print('Data values have been sent!');
+
+      ;
+    } catch (error) {
+      ('Something didnt work! Error: $error');
+    }
   }
 
   // SIGN UP METHOD
@@ -56,48 +91,38 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
 
                   // USERNAME
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.purple[100],
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: TextField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'email',
-                              hintStyle: TextStyle(color: Colors.purple[300])),
-                        ),
-                      ),
-                    ),
+                  niceTextField(
+                      dataRequired: 'first name',
+                      textController: _nameController),
+
+                  SizedBox(
+                    height: 20,
                   ),
+
+                  // LASTNAME
+                  niceTextField(
+                      dataRequired: 'last name',
+                      textController: _lastnameController),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+                  // EMAIL
+                  niceTextField(
+                      dataRequired: 'email', textController: _emailController),
 
                   SizedBox(
                     height: 20,
                   ),
                   // PASSWORD
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.purple[100],
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: TextField(
-                          controller: _passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'password',
-                              hintStyle: TextStyle(color: Colors.purple[300])),
-                        ),
-                      ),
-                    ),
-                  ),
+                  niceTextField(
+                      dataRequired: 'password',
+                      textController: _passwordController),
+
+                  SizedBox(height: 20),
+
+                  ElevatedButton(
+                      onPressed: sendUserData, child: Text('Verify my data')),
 
                   SizedBox(height: 20),
 
