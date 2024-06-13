@@ -1,26 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class MorfoLoginPage extends StatefulWidget {
-  final VoidCallback showRegisterPage;
-  const MorfoLoginPage({super.key, required this.showRegisterPage});
+class RegisterPage extends StatefulWidget {
+  final VoidCallback showLoginPage;
+  const RegisterPage({super.key, required this.showLoginPage});
 
   @override
-  State<MorfoLoginPage> createState() => MorfoLoginPageState();
+  State<RegisterPage> createState() => RegisterPageState();
 }
 
-class MorfoLoginPageState extends State<MorfoLoginPage> {
+class RegisterPageState extends State<RegisterPage> {
+  // FIREBASE REAL TIME DATABASE USER INFORMATION:
+
   // CREATE USER CONRTOLLERS:
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  // SIGN IN METHOD:
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim());
-    print("FUNCTION DOING ITS THING...");
-  }
 
   // CREATE A DISPOSE METHOD FOR MEMORY PURPOSES:
   @override
@@ -28,6 +22,13 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  // SIGN UP METHOD
+  Future signUp() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim());
   }
 
   @override
@@ -40,19 +41,13 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.handshake_outlined,
-                    size: 80,
-                    color: Colors.purple[800],
-                  ),
-
                   Text(
-                    'MORFO',
+                    'Hi there!',
                     style: TextStyle(color: Colors.black, fontSize: 25),
                   ),
 
                   Text(
-                    'Helo Again!',
+                    'New here? Fill in some info!',
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
 
@@ -107,7 +102,7 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                   SizedBox(height: 20),
 
                   GestureDetector(
-                    onTap: signIn,
+                    onTap: signUp,
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(horizontal: 50, vertical: 10),
@@ -115,7 +110,7 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                           color: Colors.purple[300],
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
-                        'Sign In',
+                        'Sign Up',
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
@@ -125,15 +120,15 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                   SizedBox(height: 20),
 
                   GestureDetector(
-                    onTap: widget.showRegisterPage,
+                    onTap: widget.showLoginPage,
                     child: Container(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 45, vertical: 10),
+                          EdgeInsets.symmetric(horizontal: 55, vertical: 10),
                       decoration: BoxDecoration(
                           color: Colors.purple[300],
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
-                        'Register',
+                        'Log in!',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

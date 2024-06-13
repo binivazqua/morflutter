@@ -47,6 +47,14 @@ class _SendAndfetchState extends State<SendAndfetch> {
                       MaterialPageRoute(builder: (context) => WriteExamples()));
                 },
                 child: Text('Add Data')),
+            MaterialButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => WriteExamples()));
+              },
+              color: Colors.purple[100],
+              child: Text('Write data'),
+            )
           ]),
         ),
       ),

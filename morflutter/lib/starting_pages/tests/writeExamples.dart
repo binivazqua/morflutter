@@ -48,48 +48,52 @@ class _WriteExamplesState extends State<WriteExamples> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  // PROPER SYNTAXIS TO WRITE DATA IN A JSON FORMAT.
-                  testWrite
-                      .set({
-                        'child1': 'value1',
-                        'child2': 'value2',
-                        'child3': 'value3',
-                      })
-                      .then((_) => print('Data values have been sent!'))
-                      .catchError((error) =>
-                          print('Something didnt work! Error: $error'));
-                },
-                child: Text('Press to send')),
-            ElevatedButton(
-                onPressed: () {
-                  // PROPER SYNTAXIS TO CHANGE DATA.
-                  testWrite
-                      .child('/child1/')
-                      .set('another value')
-                      .then((_) => print('Data values have been CHANGED!'))
-                      .catchError((error) =>
-                          print('Something didnt work! Error: $error'));
-                  ;
-                },
-                child: Text('Press to change')),
-            ElevatedButton(
-                onPressed: () {
-                  // PROPER SYNTAXIS TO CHANGE/REPLACE DATA.
-                  testWrite
-                      .update({
-                        'child2': 'value now equals = ${Random().nextInt(100)}'
-                      })
-                      .then((_) => print('Data values have been UPDATED!'))
-                      .catchError((error) =>
-                          print('Something didnt work! Error: $error'));
-                  ;
-                },
-                child: Text('Press to update')),
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    // PROPER SYNTAXIS TO WRITE DATA IN A JSON FORMAT.
+                    testWrite
+                        .set({
+                          'child1': 'value1',
+                          'child2': 'value2',
+                          'child3': 'value3',
+                        })
+                        .then((_) => print('Data values have been sent!'))
+                        .catchError((error) =>
+                            print('Something didnt work! Error: $error'));
+                  },
+                  child: Text('Press to send')),
+              ElevatedButton(
+                  onPressed: () {
+                    // PROPER SYNTAXIS TO CHANGE DATA.
+                    testWrite
+                        .child('/child1/')
+                        .set('another value')
+                        .then((_) => print('Data values have been CHANGED!'))
+                        .catchError((error) =>
+                            print('Something didnt work! Error: $error'));
+                    ;
+                  },
+                  child: Text('Press to change')),
+              ElevatedButton(
+                  onPressed: () {
+                    // PROPER SYNTAXIS TO CHANGE/REPLACE DATA.
+                    testWrite
+                        .update({
+                          'child2':
+                              'value now equals = ${Random().nextInt(100)}'
+                        })
+                        .then((_) => print('Data values have been UPDATED!'))
+                        .catchError((error) =>
+                            print('Something didnt work! Error: $error'));
+                    ;
+                  },
+                  child: Text('Press to update')),
+            ],
+          ),
         ),
       ),
     );
