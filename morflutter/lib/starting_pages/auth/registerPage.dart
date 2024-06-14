@@ -18,8 +18,8 @@ class RegisterPageState extends State<RegisterPage> {
   // CREATE USER CONRTOLLERS:
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _nameController = TextEditingController();
-  final _lastnameController = TextEditingController();
 
   // CREATE A DISPOSE METHOD FOR MEMORY PURPOSES:
   @override
@@ -31,18 +31,17 @@ class RegisterPageState extends State<RegisterPage> {
 
   // SEND USER DATA FUNCTION:
   void sendUserData() {
-    /*_MorfoDatabase.child('user #')
+    _MorfoDatabase.child(_usernameController.text)
         .set({
-          'user name': _nameController.text.trim(),
-          'user_lastname': _lastnameController.text.trim(),
+          'name': _nameController.text.trim(),
           'user_email': _emailController.text.trim(),
           'user_password': _passwordController.text.trim(),
           'user_id': 'none',
         })
         .then((_) => print('Data values have been sent!'))
-        .catchError((error) => print('Something didnt work! Error: $error'), );
-    ;*/
+        .catchError((error) => print('Something didnt work! Error: $error'));
 
+    /*
     try {
       _MorfoDatabase.child('user #').set({
         'user name': _nameController.text.trim(),
@@ -57,6 +56,8 @@ class RegisterPageState extends State<RegisterPage> {
     } catch (error) {
       ('Something didnt work! Error: $error');
     }
+
+    */
   }
 
   // SIGN UP METHOD
@@ -65,6 +66,9 @@ class RegisterPageState extends State<RegisterPage> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim());
   }
+
+  // CREATE A METHOD TO INDICATE THAT THE USER WAS CREATED SUCCESSFULLY:
+  void dataSentSuccessfully() {}
 
   @override
   Widget build(BuildContext context) {
@@ -98,15 +102,6 @@ class RegisterPageState extends State<RegisterPage> {
                   SizedBox(
                     height: 20,
                   ),
-
-                  // LASTNAME
-                  niceTextField(
-                      dataRequired: 'last name',
-                      textController: _lastnameController),
-
-                  SizedBox(
-                    height: 20,
-                  ),
                   // EMAIL
                   niceTextField(
                       dataRequired: 'email', textController: _emailController),
@@ -118,6 +113,13 @@ class RegisterPageState extends State<RegisterPage> {
                   niceTextField(
                       dataRequired: 'password',
                       textController: _passwordController),
+
+                  SizedBox(height: 20),
+
+                  // USERNAME
+                  niceTextField(
+                      dataRequired: 'username',
+                      textController: _usernameController),
 
                   SizedBox(height: 20),
 

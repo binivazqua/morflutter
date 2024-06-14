@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:morflutter/components/texFil.dart';
 
 class MorfoLoginPage extends StatefulWidget {
   final VoidCallback showRegisterPage;
@@ -10,9 +12,13 @@ class MorfoLoginPage extends StatefulWidget {
 }
 
 class MorfoLoginPageState extends State<MorfoLoginPage> {
+  // FIREBASE REAL TIME DATABASE USER INFORMATION:
+  final _MorfoDatabase = FirebaseDatabase.instance.ref('users');
+
   // CREATE USER CONRTOLLERS:
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
 
   // SIGN IN METHOD:
   Future signIn() async {
@@ -20,6 +26,15 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim());
     print("FUNCTION DOING ITS THING...");
+  }
+
+  // CREATE AN UPDATE USER ID METHOD:
+  void updateUserID(DatabaseReference branch, User? user) {
+    String? userID = user?.uid.trim();
+
+    branch
+        .child(_usernameController.text)
+        .update(userID.toString() as Map<String, Object?>);
   }
 
   // CREATE A DISPOSE METHOD FOR MEMORY PURPOSES:
@@ -32,6 +47,7 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final userBranch = _MorfoDatabase.child(_usernameController.text);
     return Scaffold(
         backgroundColor: Colors.white,
         body: Center(
@@ -55,6 +71,14 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                     'Helo Again!',
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  niceTextField(
+                      dataRequired: 'username',
+                      textController: _usernameController),
 
                   SizedBox(
                     height: 20,
@@ -108,6 +132,8 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
 
                   GestureDetector(
                     onTap: signIn,
+                    onDoubleTap: () => updateUserID(
+                        userBranch, FirebaseAuth.instance.currentUser),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(horizontal: 50, vertical: 10),
