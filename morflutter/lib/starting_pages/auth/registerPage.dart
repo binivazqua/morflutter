@@ -14,6 +14,7 @@ class RegisterPage extends StatefulWidget {
 class RegisterPageState extends State<RegisterPage> {
   // FIREBASE REAL TIME DATABASE USER INFORMATION:
   final _MorfoDatabase = FirebaseDatabase.instance.ref('users');
+  final _MorfoDatabaseSync = FirebaseDatabase.instance.ref().keepSynced(true);
 
   // CREATE USER CONRTOLLERS:
   final _emailController = TextEditingController();
@@ -26,6 +27,8 @@ class RegisterPageState extends State<RegisterPage> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _usernameController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -40,24 +43,6 @@ class RegisterPageState extends State<RegisterPage> {
         })
         .then((_) => print('Data values have been sent!'))
         .catchError((error) => print('Something didnt work! Error: $error'));
-
-    /*
-    try {
-      _MorfoDatabase.child('user #').set({
-        'user name': _nameController.text.trim(),
-        'user_lastname': _lastnameController.text.trim(),
-        'user_email': _emailController.text.trim(),
-        'user_password': _passwordController.text.trim(),
-        'user_id': 'none',
-      });
-      print('Data values have been sent!');
-
-      ;
-    } catch (error) {
-      ('Something didnt work! Error: $error');
-    }
-
-    */
   }
 
   // SIGN UP METHOD
@@ -67,8 +52,28 @@ class RegisterPageState extends State<RegisterPage> {
         password: _passwordController.text.trim());
   }
 
-  // CREATE A METHOD TO INDICATE THAT THE USER WAS CREATED SUCCESSFULLY:
-  void dataSentSuccessfully() {}
+  Future<void> singUpAndSendData() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      // IF SUCCESSFUL, THEN SEND USER DATA:
+      User? newUser = userCredential.user;
+      if (newUser != null) {
+        await _MorfoDatabase.child(newUser.uid).set({
+          'name': _nameController.text.trim(),
+          'username': _usernameController.text.trim(),
+          'email': _emailController.text.trim(),
+        });
+        print('User data has been saved!');
+      }
+    } catch (error) {
+      print('Error creating user: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,12 +129,12 @@ class RegisterPageState extends State<RegisterPage> {
                   SizedBox(height: 20),
 
                   ElevatedButton(
-                      onPressed: sendUserData, child: Text('Verify my data')),
+                      onPressed: () {}, child: Text('Verify my data')),
 
                   SizedBox(height: 20),
 
                   GestureDetector(
-                    onTap: signUp,
+                    onTap: singUpAndSendData,
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(horizontal: 50, vertical: 10),
