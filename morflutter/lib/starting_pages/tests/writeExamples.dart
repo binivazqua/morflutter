@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 /* FIREBASE REQUIRED IMPORTS */
 import 'package:firebase_core/firebase_core.dart';
+import 'package:morflutter/components/texFil.dart';
 import 'package:morflutter/starting_pages/tests/sendAndFetch.dart';
 
 class WriteExamples extends StatefulWidget {
@@ -28,12 +29,34 @@ class _WriteExamplesState extends State<WriteExamples> {
           'key1': 'data1',
           'key3': 'data3',
         }
-      
 
   */
 
+  // TEXT EDITING CONTROLLERS TO ADD SIMULATED SENSOR DATA TO FIREBASE:
+  TextEditingController _emgValue = TextEditingController();
+  TextEditingController _dateTime = TextEditingController();
+
+  // CREATE ONDROPDOWN METHOD:
+  void _dropDownCallback(String? selected) {
+    if (selected is String) {
+      setState(() {
+        //value = selected;
+      });
+    }
+  }
+
   // STEP 1:
   final database = FirebaseDatabase.instance.ref();
+
+  // Define the dropdown value and initialize it
+  List<String> muscles = <String>['Bicep', 'Tricep', 'Tronador', 'Deltoides'];
+  String _dropdownValue = 'Bicep';
+
+  @override
+  void initState() {
+    super.initState();
+    _dropdownValue = muscles.first;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +75,23 @@ class _WriteExamplesState extends State<WriteExamples> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              DropdownButton(
+                value: _dropdownValue,
+                items: muscles.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                      value: value, child: Text(value));
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _dropdownValue = newValue!;
+                  });
+                },
+              ),
+
+              // TEXT FIELDS:
+              niceTextField(
+                  dataRequired: 'EMG Value:', textController: _emgValue),
+
               ElevatedButton(
                   onPressed: () {
                     // PROPER SYNTAXIS TO WRITE DATA IN A JSON FORMAT.

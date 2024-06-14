@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:morflutter/starting_pages/readExamples.dart';
+import 'package:morflutter/starting_pages/tests/readExamples.dart';
 import 'package:morflutter/starting_pages/tests/writeExamples.dart';
 
 class SendAndfetch extends StatefulWidget {
