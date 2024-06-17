@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:morflutter/starting_pages/tests/readExamples.dart';
-import 'package:morflutter/starting_pages/tests/writeExamples.dart';
+import 'package:morflutter/starting_pages/tests/tabSendData.dart';
 
 class SendAndfetch extends StatefulWidget {
   const SendAndfetch({
@@ -43,14 +43,18 @@ class _SendAndfetchState extends State<SendAndfetch> {
                 child: Text('Read Data')),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => WriteExamples()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => tabSendSensorData()));
                 },
                 child: Text('Add Data')),
             MaterialButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => WriteExamples()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => tabSendSensorData()));
               },
               color: Colors.purple[100],
               child: Text('Write data'),

@@ -101,30 +101,39 @@ class RegisterPageState extends State<RegisterPage> {
 
                   // USERNAME
                   niceTextField(
-                      dataRequired: 'first name',
-                      textController: _nameController),
+                    dataRequired: 'first name',
+                    textController: _nameController,
+                    p: 25,
+                  ),
 
                   SizedBox(
                     height: 20,
                   ),
                   // EMAIL
                   niceTextField(
-                      dataRequired: 'email', textController: _emailController),
+                    dataRequired: 'email',
+                    textController: _emailController,
+                    p: 25,
+                  ),
 
                   SizedBox(
                     height: 20,
                   ),
                   // PASSWORD
                   niceTextField(
-                      dataRequired: 'password',
-                      textController: _passwordController),
+                    dataRequired: 'password',
+                    textController: _passwordController,
+                    p: 25,
+                  ),
 
                   SizedBox(height: 20),
 
                   // USERNAME
                   niceTextField(
-                      dataRequired: 'username',
-                      textController: _usernameController),
+                    dataRequired: 'username',
+                    textController: _usernameController,
+                    p: 25,
+                  ),
 
                   SizedBox(height: 20),
 

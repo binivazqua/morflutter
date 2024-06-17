@@ -54,8 +54,8 @@ class MainApp extends StatelessWidget {
               return Text('Somethin went wrong!!!');
             } else if (snapshot.hasData) {
               //return SendAndfetch();
-              //return MainPage();
-              return WriteExamples();
+              return MainPage();
+              //return WriteExamples();
             } else {
               return Center(child: CircularProgressIndicator());
             }

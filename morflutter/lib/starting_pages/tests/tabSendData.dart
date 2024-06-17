@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 /* FIREBASE REQUIRED IMPORTS */
@@ -7,14 +8,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:morflutter/components/texFil.dart';
 import 'package:morflutter/starting_pages/tests/sendAndFetch.dart';
 
-class WriteExamples extends StatefulWidget {
-  const WriteExamples({super.key});
+class tabSendSensorData extends StatefulWidget {
+  const tabSendSensorData({super.key});
 
   @override
-  State<WriteExamples> createState() => _WriteExamplesState();
+  State<tabSendSensorData> createState() => _tabSendSensorDataState();
 }
 
-class _WriteExamplesState extends State<WriteExamples> {
+class _tabSendSensorDataState extends State<tabSendSensorData> {
   /* HOW TO SEND DATA TO REAL TIME DATABASE:
 
       1. Create an ainstance of our database.
@@ -65,10 +66,6 @@ class _WriteExamplesState extends State<WriteExamples> {
         database.child('testWrite/'); // MAKE SURE U HAVE '/' in there!
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Write Examples'),
-        backgroundColor: Colors.purple[200],
-      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Center(
@@ -88,24 +85,26 @@ class _WriteExamplesState extends State<WriteExamples> {
                 },
               ),
 
+              SizedBox(height: 20),
+
               // TEXT FIELDS:
               niceTextField(
-                  dataRequired: 'EMG Value:', textController: _emgValue),
+                dataRequired: 'EMG Value:',
+                textController: _emgValue,
+                p: 120,
+              ),
+
+              SizedBox(
+                height: 50,
+              ),
 
               ElevatedButton(
-                  onPressed: () {
-                    // PROPER SYNTAXIS TO WRITE DATA IN A JSON FORMAT.
-                    testWrite
-                        .set({
-                          'child1': 'value1',
-                          'child2': 'value2',
-                          'child3': 'value3',
-                        })
-                        .then((_) => print('Data values have been sent!'))
-                        .catchError((error) =>
-                            print('Something didnt work! Error: $error'));
-                  },
-                  child: Text('Press to send')),
+                onPressed: singUpAndSendData,
+                child: Text('Send'),
+                // PROPER SYNTAXIS TO WRITE DATA IN A JSON FORMAT.
+              ),
+
+              /*
               ElevatedButton(
                   onPressed: () {
                     // PROPER SYNTAXIS TO CHANGE DATA.
@@ -132,10 +131,29 @@ class _WriteExamplesState extends State<WriteExamples> {
                     ;
                   },
                   child: Text('Press to update')),
+              */
             ],
           ),
         ),
       ),
     );
+  }
+
+  // SEND SENSOR DATA METHOD:
+  Future<void> singUpAndSendData() async {
+    try {
+      // IF SUCCESSFUL, THEN SEND USER DATA:
+      User? newUser = FirebaseAuth.instance.currentUser;
+      if (newUser != null) {
+        await database.child(newUser.uid).set({
+          'muscle': _dropdownValue,
+          'emg value': _emgValue.text.trim(),
+          'date': DateTime.now(),
+        });
+        print('Sensor data has been sent!');
+      }
+    } catch (error) {
+      print('Error sending user sensor data: $error');
+    }
   }
 }

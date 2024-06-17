@@ -77,8 +77,10 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                   ),
 
                   niceTextField(
-                      dataRequired: 'username',
-                      textController: _usernameController),
+                    dataRequired: 'username',
+                    textController: _usernameController,
+                    p: 25,
+                  ),
 
                   SizedBox(
                     height: 20,
