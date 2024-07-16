@@ -63,7 +63,7 @@ class _tabSendSensorDataState extends State<tabSendSensorData> {
   Widget build(BuildContext context) {
     // STEP #2:
     final testWrite =
-        database.child('testWrite/'); // MAKE SURE U HAVE '/' in there!
+        database.child('flutter/'); // MAKE SURE U HAVE '/' in there!
 
     return Scaffold(
       body: Padding(
@@ -139,16 +139,53 @@ class _tabSendSensorDataState extends State<tabSendSensorData> {
     );
   }
 
+  Future<void> singUpAndPrintPath() async {
+    try {
+      // IF SUCCESSFUL, THEN SEND USER DATA:
+      User? newUser = FirebaseAuth.instance.currentUser;
+
+      if (newUser != null) {
+        String path =
+            '/flutter/' + newUser.uid + '/' + DateTime.april.toString();
+        print(path);
+      }
+    } catch (error) {
+      print('Error printing path: $error');
+    }
+  }
+
   // SEND SENSOR DATA METHOD:
   Future<void> singUpAndSendData() async {
     try {
       // IF SUCCESSFUL, THEN SEND USER DATA:
       User? newUser = FirebaseAuth.instance.currentUser;
+
       if (newUser != null) {
-        await database.child(newUser.uid).set({
+        String path = '/flutter/' + newUser.uid + '/';
+        await database.child(path).set({
           'muscle': _dropdownValue,
           'emg value': _emgValue.text.trim(),
-          'date': DateTime.now(),
+          //'date': DateTime.now().toString(),
+        });
+        print('Sensor data has been sent!');
+      }
+    } catch (error) {
+      print('Error sending user sensor data: $error');
+    }
+  }
+
+  Future<void> singUpAndSendDataFlutter() async {
+    try {
+      // IF SUCCESSFUL, THEN SEND USER DATA:
+      User? newUser = FirebaseAuth.instance.currentUser;
+      if (newUser != null) {
+        await database
+            .child('/flutter/' +
+                newUser.uid.trim() +
+                '/' +
+                DateTime.now().toString())
+            .set({
+          _dropdownValue: _emgValue.text.trim(),
         });
         print('Sensor data has been sent!');
       }

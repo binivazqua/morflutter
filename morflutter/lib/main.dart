@@ -6,7 +6,7 @@ import 'package:morflutter/display_info/sensorData.dart';
 import 'package:morflutter/starting_pages/auth/loginPage.dart';
 import 'package:morflutter/starting_pages/auth/mainPage.dart';
 import 'package:morflutter/starting_pages/tests/sendAndFetch.dart';
-import 'package:morflutter/starting_pages/tests/writeExamples.dart';
+import 'package:morflutter/starting_pages/tests/tabSendData.dart';
 import 'firebase_options.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
