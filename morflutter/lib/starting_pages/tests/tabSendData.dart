@@ -104,6 +104,9 @@ class _tabSendSensorDataState extends State<tabSendSensorData> {
                 // PROPER SYNTAXIS TO WRITE DATA IN A JSON FORMAT.
               ),
 
+              ElevatedButton(
+                  onPressed: singUpAndPrintPath, child: Text('Print Path'))
+
               /*
               ElevatedButton(
                   onPressed: () {
@@ -145,8 +148,12 @@ class _tabSendSensorDataState extends State<tabSendSensorData> {
       User? newUser = FirebaseAuth.instance.currentUser;
 
       if (newUser != null) {
-        String path =
-            '/flutter/' + newUser.uid + '/' + DateTime.april.toString();
+        DateTime date = DateTime.now();
+        String year = date.year.toString();
+        String month = date.month.toString();
+        String day = date.day.toString();
+
+        String path = '/flutter/${newUser.uid}/${year}/${month}/${day}';
         print(path);
       }
     } catch (error) {
@@ -161,7 +168,11 @@ class _tabSendSensorDataState extends State<tabSendSensorData> {
       User? newUser = FirebaseAuth.instance.currentUser;
 
       if (newUser != null) {
-        String path = '/flutter/' + newUser.uid + '/';
+        String path = '/flutter/' +
+            newUser.uid +
+            '/' +
+            DateTime.now().toString().trim() +
+            '/';
         await database.child(path).set({
           'muscle': _dropdownValue,
           'emg value': _emgValue.text.trim(),
