@@ -182,7 +182,6 @@ class _tabSendSensorDataState extends State<tabSendSensorData> {
           'emg value': _emgValue.text.trim(),
           //'date': DateTime.now().toString(),
         });
-
         print('Sensor data has been sent!');
       }
     } catch (error) {
