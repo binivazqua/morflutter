@@ -152,8 +152,9 @@ class _tabSendSensorDataState extends State<tabSendSensorData> {
         String year = date.year.toString();
         String month = date.month.toString();
         String day = date.day.toString();
+        String formated_date = day + "-" + month + "-" + year;
 
-        String path = '/flutter/${newUser.uid}/${year}/${month}/${day}';
+        String path = '/flutter/${newUser.uid}/${formated_date}';
         print(path);
       }
     } catch (error) {
@@ -168,16 +169,20 @@ class _tabSendSensorDataState extends State<tabSendSensorData> {
       User? newUser = FirebaseAuth.instance.currentUser;
 
       if (newUser != null) {
-        String path = '/flutter/' +
-            newUser.uid +
-            '/' +
-            DateTime.now().toString().trim() +
-            '/';
-        await database.child(path).set({
+        DateTime date = DateTime.now();
+        String year = date.year.toString();
+        String month = date.month.toString();
+        String day = date.day.toString();
+        String formated_date = day + "-" + month + "-" + year;
+
+        String path = '/flutter/${newUser.uid}/${formated_date}';
+
+        await database.child(path).push().set({
           'muscle': _dropdownValue,
           'emg value': _emgValue.text.trim(),
           //'date': DateTime.now().toString(),
         });
+
         print('Sensor data has been sent!');
       }
     } catch (error) {
