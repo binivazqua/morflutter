@@ -5,6 +5,7 @@ import 'package:morflutter/starting_pages/auth/authPage.dart';
 import 'package:morflutter/starting_pages/auth/loggedPage.dart';
 import 'package:morflutter/starting_pages/auth/loginPage.dart';
 import 'package:morflutter/starting_pages/tests/sendAndFetch.dart';
+import 'package:morflutter/starting_pages/ui/homepage.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
