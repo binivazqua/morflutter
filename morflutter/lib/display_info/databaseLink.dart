@@ -52,13 +52,16 @@ class _databaseReadTestState extends State<databaseReadTest> {
 
       // create a SetState() call to change our value.
       setState(() {
-        databaseData = 'Database data:' + data;
+        databaseData = 'Raw Database data:' + data;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    String? userUID = newUser?.uid;
+    String path = '/sensorSim/${userUID}/';
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple[200],
@@ -81,7 +84,44 @@ class _databaseReadTestState extends State<databaseReadTest> {
                   onPressed: _activateListeners,
                   child: Text('Press'),
                 ),
-                ElevatedButton(onPressed: LogOut, child: Text('Change user'))
+                ElevatedButton(onPressed: LogOut, child: Text('Change user')),
+
+                /**
+                 * USING A STREAM BUILDER AS AN EVENT LISTENER:
+                 */
+
+                StreamBuilder(
+                    stream: database.child(path).onValue,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData &&
+                          snapshot.data!.snapshot.value != null) {
+                        final data = Map<String, dynamic>.from(
+                            snapshot.data!.snapshot.value as Map);
+                        List<ListTile> tilesList = [];
+
+                        data.forEach((date, muscleData) {
+                          tilesList.add(ListTile(
+                            title: Text(date),
+                            subtitle: Column(
+                              children: (muscleData as Map<dynamic, dynamic>)
+                                  .entries
+                                  .map((entry) {
+                                return Text('${entry.key}: ${entry.value}');
+                              }).toList(),
+                            ),
+                          ));
+                        });
+
+                        return ListView(
+                          shrinkWrap: true,
+                          children: tilesList,
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    })
               ],
             ),
           ),
