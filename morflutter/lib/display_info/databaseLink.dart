@@ -75,15 +75,6 @@ class _databaseReadTestState extends State<databaseReadTest> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(databaseData),
-                Text('Press to print path:'),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: _activateListeners,
-                  child: Text('Press'),
-                ),
                 ElevatedButton(onPressed: LogOut, child: Text('Change user')),
 
                 /**
@@ -91,15 +82,22 @@ class _databaseReadTestState extends State<databaseReadTest> {
                  */
 
                 StreamBuilder(
+                    // Our Data Source to be listened.
                     stream: database.child(path).onValue,
+                    // The function that makes up our widget tree based on the last data obtained.
                     builder: (context, snapshot) {
+                      // check if there is data in our path.
                       if (snapshot.hasData &&
                           snapshot.data!.snapshot.value != null) {
+                        // create a map from the data snapshot.
                         final data = Map<String, dynamic>.from(
                             snapshot.data!.snapshot.value as Map);
+
+                        // create a list of widgets.
                         List<ListTile> tilesList = [];
 
                         data.forEach((date, muscleData) {
+                          // for each piece of data, compose a listTile.
                           tilesList.add(ListTile(
                             title: Text(date),
                             subtitle: Column(
@@ -107,21 +105,24 @@ class _databaseReadTestState extends State<databaseReadTest> {
                                   .entries
                                   .map((entry) {
                                 return Text('${entry.key}: ${entry.value}');
-                              }).toList(),
+                              }).toList(), // convert to a list
                             ),
                           ));
                         });
 
+                        // display the listTile arrangement.
                         return ListView(
                           shrinkWrap: true,
                           children: tilesList,
                         );
                       } else {
+                        // if we don't have data or is null:
                         return Center(
                           child: CircularProgressIndicator(),
                         );
                       }
-                    })
+                    }),
+                ElevatedButton(onPressed: LogOut, child: Text('Change user'))
               ],
             ),
           ),
