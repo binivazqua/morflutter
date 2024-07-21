@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:morflutter/display_info/databaseClass.dart';
 
 class databaseReadTest extends StatefulWidget {
   const databaseReadTest({super.key});
@@ -75,12 +76,10 @@ class _databaseReadTestState extends State<databaseReadTest> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(onPressed: LogOut, child: Text('Change user')),
-
                 /**
                  * USING A STREAM BUILDER AS AN EVENT LISTENER:
                  */
-
+                /*
                 StreamBuilder(
                     // Our Data Source to be listened.
                     stream: database.child(path).onValue,
@@ -94,11 +93,11 @@ class _databaseReadTestState extends State<databaseReadTest> {
                             snapshot.data!.snapshot.value as Map);
 
                         // create a list of widgets.
-                        List<ListTile> tilesList = [];
+                        List<ListTile> sensorDataList = [];
 
                         data.forEach((date, muscleData) {
                           // for each piece of data, compose a listTile.
-                          tilesList.add(ListTile(
+                          sensorDataList.add(ListTile(
                             title: Text(date),
                             subtitle: Column(
                               children: (muscleData as Map<dynamic, dynamic>)
@@ -112,8 +111,10 @@ class _databaseReadTestState extends State<databaseReadTest> {
 
                         // display the listTile arrangement.
                         return ListView(
+                          // add neverscrollable to allow singleChildScrollView to work:
+                          physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          children: tilesList,
+                          children: sensorDataList,
                         );
                       } else {
                         // if we don't have data or is null:
@@ -121,7 +122,50 @@ class _databaseReadTestState extends State<databaseReadTest> {
                           child: CircularProgressIndicator(),
                         );
                       }
-                    }),
+                    }),*/
+                StreamBuilder(
+                  stream: database.child(path).onValue,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData &&
+                        snapshot.data!.snapshot.value != null) {
+                      final data = Map<String, dynamic>.from(
+                          snapshot.data!.snapshot.value as Map);
+                      List<MorfoData> sensorDataList = [];
+
+                      data.forEach((date, muscleData) {
+                        if (muscleData is Map<dynamic, dynamic>) {
+                          sensorDataList.add(MorfoData.fromMap(
+                              date, Map<String, dynamic>.from(muscleData)));
+                        } else {
+                          sensorDataList.add(MorfoData(
+                              time: date, muscleData: {'data': muscleData}));
+                        }
+                      });
+
+                      return ListView.builder(
+                        // single child scrollview allowed:
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: sensorDataList.length,
+                        itemBuilder: (context, index) {
+                          final sensorData = sensorDataList[index];
+                          return ListTile(
+                            title: Text(sensorData.time),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children:
+                                  sensorData.muscleData.entries.map((entry) {
+                                return Text('${entry.key}: ${entry.value}');
+                              }).toList(),
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
                 ElevatedButton(onPressed: LogOut, child: Text('Change user'))
               ],
             ),
