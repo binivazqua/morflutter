@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:morflutter/display_info/databaseClass.dart';
 
 class dataVis extends StatefulWidget {
   const dataVis({super.key});
@@ -9,6 +12,87 @@ class dataVis extends StatefulWidget {
 }
 
 class _dataVisState extends State<dataVis> {
+  final database = FirebaseDatabase.instance.ref();
+  User? newUser = FirebaseAuth.instance.currentUser;
+  List<MorfoData> sensorDataList = [];
+
+  /**
+   *  Initializes our app state so that it can read data in real time.
+   */
+  @override
+  void initState() {
+    super.initState();
+    //_activateListeners();
+    FetchMorfoData();
+  }
+
+  /**
+   * _A method to fetch data from RTDB and only make use of the classes in our code.
+   *  The same used in our @databaseLink page.
+   */
+  void FetchMorfoData() {
+    String? userUID = newUser?.uid;
+    String path = '/sensorSim/${userUID}/';
+
+    database.child(path).onValue.listen((event) {
+      final data = event.snapshot.value as Map<dynamic, dynamic>;
+      List<MorfoData> tempList = [];
+
+      data.forEach((date, muscleData) {
+        if (muscleData is Map<dynamic, dynamic>) {
+          tempList.add(
+              MorfoData.fromMap(date, Map<String, dynamic>.from(muscleData)));
+        }
+      });
+
+      setState(() {
+        sensorDataList = tempList;
+      });
+    });
+  }
+
+  /**
+   *  Listens to any updates to the desired child in the database.
+   */
+  void _activateListeners() {
+    String? userUID = newUser?.uid;
+    String path = '/sensorSim/$userUID/';
+    database.child(path).onValue.listen((event) {
+      final data = event.snapshot.value as Map<dynamic, dynamic>;
+      List<MorfoData> tempList = [];
+      data.forEach((date, muscleData) {
+        if (muscleData is Map<dynamic, dynamic>) {
+          tempList.add(
+              MorfoData.fromMap(date, Map<String, dynamic>.from(muscleData)));
+        }
+      });
+      setState(() {
+        sensorDataList = tempList;
+      });
+    });
+  }
+
+  /**
+   * Generate FL spots.
+   */
+
+  List<FlSpot> _generateSpots() {
+    // Create al FLSpot object list.
+    List<FlSpot> spots = [];
+    int index = 0;
+    // iterate in our data and append to the list.
+    for (var sensorData in sensorDataList) {
+      for (var reading in sensorData.muscleData) {
+        print('Data: ${sensorData.muscleData}');
+        spots.add(FlSpot(index.toDouble(), reading.value.toDouble()));
+        index++;
+      }
+    }
+
+    print('Spots: ${spots}');
+    return spots;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,22 +135,8 @@ class _dataVisState extends State<dataVis> {
                     ]),
                     isCurved: true,
                     barWidth: 6,
-                    spots: const [
-                      // insert your data here:
-                      FlSpot(1, 3.8),
-                      FlSpot(3, 2.8),
-                      FlSpot(7, 1.2),
-                      FlSpot(10, 2.8),
-                      FlSpot(12, 2.6),
-                      FlSpot(13, 3.9),
-                    ],
+                    spots: _generateSpots(),
                   ),
-                  LineChartBarData(spots: const [
-                    FlSpot(0, 1.8),
-                    FlSpot(2, 4.8),
-                    FlSpot(5, 1.5),
-                    FlSpot(9, 2.8),
-                  ])
                 ])),
           ),
         ),

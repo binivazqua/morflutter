@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:morflutter/display_info/databaseClass.dart';
+import 'package:morflutter/display_info/sensorData.dart';
 
 class databaseReadTest extends StatefulWidget {
   const databaseReadTest({super.key});
@@ -97,6 +98,16 @@ class _databaseReadTestState extends State<databaseReadTest> {
       appBar: AppBar(
         backgroundColor: Colors.purple[200],
         title: Text('Fetch data from database'),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => dataVis()));
+                  },
+                  icon: Icon(Icons.graphic_eq)))
+        ],
       ),
       body: Center(
         child: Padding(
@@ -106,53 +117,17 @@ class _databaseReadTestState extends State<databaseReadTest> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Mi expediente:',
+                  style: TextStyle(fontSize: 20),
+                ),
+
                 /**
                  * USING A STREAM BUILDER AS AN EVENT LISTENER:
                  */
-                /*
-                StreamBuilder(
-                    // Our Data Source to be listened.
-                    stream: database.child(path).onValue,
-                    // The function that makes up our widget tree based on the last data obtained.
-                    builder: (context, snapshot) {
-                      // check if there is data in our path.
-                      if (snapshot.hasData &&
-                          snapshot.data!.snapshot.value != null) {
-                        // create a map from the data snapshot.
-                        final data = Map<String, dynamic>.from(
-                            snapshot.data!.snapshot.value as Map);
-
-                        // create a list of widgets.
-                        List<ListTile> sensorDataList = [];
-
-                        data.forEach((date, muscleData) {
-                          // for each piece of data, compose a listTile.
-                          sensorDataList.add(ListTile(
-                            title: Text(date),
-                            subtitle: Column(
-                              children: (muscleData as Map<dynamic, dynamic>)
-                                  .entries
-                                  .map((entry) {
-                                return Text('${entry.key}: ${entry.value}');
-                              }).toList(), // convert to a list
-                            ),
-                          ));
-                        });
-
-                        // display the listTile arrangement.
-                        return ListView(
-                          // add neverscrollable to allow singleChildScrollView to work:
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          children: sensorDataList,
-                        );
-                      } else {
-                        // if we don't have data or is null:
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    }),*/
 
                 StreamBuilder(
                   stream: database.child(path).onValue,
