@@ -20,13 +20,17 @@ class _databaseReadTestState extends State<databaseReadTest> {
   // Primary data:
   String databaseData = 'Data from database will be here';
 
+  // Morfo Data lIST:
+  List<MorfoData> morfoDataList = [];
+
   /**
    *  Initializes our app state so that it can read data in real time.
    */
   @override
   void initState() {
     super.initState();
-    _activateListeners();
+    //_activateListeners();
+    FetchMorfoData();
   }
 
   void LogOut() {
@@ -54,6 +58,32 @@ class _databaseReadTestState extends State<databaseReadTest> {
       // create a SetState() call to change our value.
       setState(() {
         databaseData = 'Raw Database data:' + data;
+      });
+    });
+  }
+
+  /** 
+   * Fetch data function.
+   */
+
+  void FetchMorfoData() {
+    // taking current user UID to implement it in the path.
+    String? userUID = newUser?.uid;
+    String path = '/sensorSim/${userUID}/';
+
+    print('Activating listeners at path: ${path}');
+
+    database.child(path).onValue.listen((event) {
+      final morfoData = event.snapshot.value as Map<dynamic, dynamic>;
+      List<MorfoData> tempList = [];
+      morfoData.forEach((date, muscleData) {
+        if (muscleData is Map<dynamic, dynamic>) {
+          tempList.add(
+              MorfoData.fromMap(date, Map<String, dynamic>.from(muscleData)));
+        }
+      });
+      setState(() {
+        morfoDataList = tempList;
       });
     });
   }
@@ -123,6 +153,7 @@ class _databaseReadTestState extends State<databaseReadTest> {
                         );
                       }
                     }),*/
+
                 StreamBuilder(
                   stream: database.child(path).onValue,
                   builder: (context, snapshot) {
@@ -136,9 +167,6 @@ class _databaseReadTestState extends State<databaseReadTest> {
                         if (muscleData is Map<dynamic, dynamic>) {
                           sensorDataList.add(MorfoData.fromMap(
                               date, Map<String, dynamic>.from(muscleData)));
-                        } else {
-                          sensorDataList.add(MorfoData(
-                              time: date, muscleData: {'data': muscleData}));
                         }
                       });
 
@@ -153,9 +181,9 @@ class _databaseReadTestState extends State<databaseReadTest> {
                             title: Text(sensorData.time),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children:
-                                  sensorData.muscleData.entries.map((entry) {
-                                return Text('${entry.key}: ${entry.value}');
+                              children: sensorData.muscleData.map((reading) {
+                                return Text(
+                                    '${reading.muscle}: ${reading.value}');
                               }).toList(),
                             ),
                           );

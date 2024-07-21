@@ -3,7 +3,7 @@
  */
 class MuscleReading {
   final String muscle;
-  final String value;
+  final int value;
 
   MuscleReading({required this.muscle, required this.value});
 }
