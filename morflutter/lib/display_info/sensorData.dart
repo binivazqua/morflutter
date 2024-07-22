@@ -103,41 +103,54 @@ class _dataVisState extends State<dataVis> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: LineChart(LineChartData(
-                titlesData: FlTitlesData(
-                    show: true,
-                    rightTitles: AxisTitles(
-                        axisNameWidget: Text('Sensor data'),
-                        axisNameSize: 20,
-                        sideTitles: SideTitles(showTitles: false)),
-                    bottomTitles: AxisTitles(
-                        axisNameSize: 50,
-                        axisNameWidget: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              'Monday',
-                            ),
-                            Text('Tuesday'),
-                            Text('Wednesday'),
-                          ],
-                        ))),
-                lineBarsData: [
-                  LineChartBarData(
-                    color: Colors.amber,
-                    gradient: LinearGradient(colors: [
-                      Colors.purple,
-                      Colors.purpleAccent,
-                      Colors.black
-                    ]),
-                    isCurved: true,
-                    barWidth: 6,
-                    spots: _generateSpots(),
-                  ),
-                ])),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Sensor data in real time',
+                style: TextStyle(fontSize: 15),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              AspectRatio(
+                aspectRatio: 1,
+                child: LineChart(LineChartData(
+                    backgroundColor: Colors.black,
+                    titlesData: FlTitlesData(
+                        show: true,
+                        rightTitles: AxisTitles(
+                            axisNameWidget: Text('Sensor data'),
+                            axisNameSize: 20,
+                            sideTitles: SideTitles(showTitles: false)),
+                        bottomTitles: AxisTitles(
+                            axisNameSize: 50,
+                            axisNameWidget: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  'Día 1',
+                                ),
+                                Text('Día 2'),
+                                Text('Día 3'),
+                              ],
+                            ))),
+                    lineBarsData: [
+                      LineChartBarData(
+                        color: Colors.amber,
+                        gradient: LinearGradient(colors: [
+                          Colors.purple,
+                          Colors.purpleAccent,
+                          Colors.deepPurple
+                        ]),
+                        isCurved: true,
+                        barWidth: 2,
+                        spots: _generateSpots(),
+                      ),
+                    ])),
+              ),
+            ],
           ),
         ),
       ),
