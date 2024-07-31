@@ -6,7 +6,13 @@ class OnBoardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(),
+      body: PageView(children: [
+        Container(
+          color: Colors.purple,
+        ),
+        Container(),
+        Container(),
+      ]),
     );
   }
 }
