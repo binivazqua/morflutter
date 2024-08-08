@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:morflutter/components/texFil.dart';
+import 'package:morflutter/design/constants.dart';
 
 class MorfoLoginPage extends StatefulWidget {
   final VoidCallback showRegisterPage;
@@ -49,7 +50,7 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
   Widget build(BuildContext context) {
     final userBranch = _MorfoDatabase.child(_usernameController.text);
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: morfoBlack,
         body: Center(
           child: SafeArea(
             child: SingleChildScrollView(
@@ -59,17 +60,17 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                   Icon(
                     Icons.handshake_outlined,
                     size: 80,
-                    color: Colors.purple[800],
+                    color: lilyPurple,
                   ),
 
                   Text(
                     'MORFO',
-                    style: TextStyle(color: Colors.black, fontSize: 25),
+                    style: TextStyle(color: morfoWhite, fontSize: 25),
                   ),
 
                   Text(
-                    'Helo Again!',
-                    style: TextStyle(color: Colors.black, fontSize: 15),
+                    'Hello Again!',
+                    style: TextStyle(color: morfoWhite, fontSize: 15),
                   ),
 
                   SizedBox(
@@ -77,7 +78,7 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                   ),
 
                   niceTextField(
-                    dataRequired: 'username',
+                    dataRequired: 'Username',
                     textController: _usernameController,
                     p: 25,
                   ),
@@ -87,48 +88,19 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                   ),
 
                   // USERNAME
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.purple[100],
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: TextField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'email',
-                              hintStyle: TextStyle(color: Colors.purple[300])),
-                        ),
-                      ),
-                    ),
-                  ),
+                  niceTextField(
+                      dataRequired: 'Email',
+                      textController: _passwordController,
+                      p: 25),
 
                   SizedBox(
                     height: 20,
                   ),
                   // PASSWORD
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.purple[100],
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: TextField(
-                          controller: _passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'password',
-                              hintStyle: TextStyle(color: Colors.purple[300])),
-                        ),
-                      ),
-                    ),
-                  ),
+                  niceTextField(
+                      dataRequired: 'Password',
+                      textController: _passwordController,
+                      p: 25),
 
                   SizedBox(height: 20),
 
@@ -140,7 +112,14 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                       decoration: BoxDecoration(
-                          color: Colors.purple[300],
+                          //color: darkPeriwinkle,
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topRight,
+                              colors: [darkPeriwinkle, draculaPurple]),
+                          boxShadow: [
+                            //BoxShadow(color: lilyPurple, blurRadius: 5)
+                          ],
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
                         'Sign In',
@@ -158,7 +137,10 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 45, vertical: 10),
                       decoration: BoxDecoration(
-                          color: Colors.purple[300],
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topRight,
+                              colors: [darkPeriwinkle, draculaPurple]),
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
                         'Register',

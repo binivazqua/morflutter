@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:morflutter/design/constants.dart';
 
 class niceTextField extends StatefulWidget {
   final String dataRequired;
@@ -21,7 +22,9 @@ class _niceTextFieldState extends State<niceTextField> {
       padding: EdgeInsets.symmetric(horizontal: widget.p),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.purple[100], borderRadius: BorderRadius.circular(15)),
+            color: lilyPurple,
+            borderRadius: BorderRadius.circular(12),
+            gradient: LinearGradient(colors: [lilyPurple, darkPeriwinkle])),
         child: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: TextField(
@@ -29,7 +32,7 @@ class _niceTextFieldState extends State<niceTextField> {
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: widget.dataRequired,
-                hintStyle: TextStyle(color: Colors.purple[300])),
+                hintStyle: TextStyle(color: draculaPurple)),
           ),
         ),
       ),
