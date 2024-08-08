@@ -187,7 +187,15 @@ class _databaseReadTestState extends State<databaseReadTest> {
                     }
                   },
                 ),
-                ElevatedButton(onPressed: LogOut, child: Text('Change user'))
+                ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(lilyPurple)),
+                    onPressed: LogOut,
+                    child: Text(
+                      'Log Out',
+                      style: TextStyle(
+                          fontFamily: 'Lausane650', color: draculaPurple),
+                    ))
               ],
             ),
           ),

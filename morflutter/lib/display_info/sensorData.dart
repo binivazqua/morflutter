@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:morflutter/design/constants.dart';
 import 'package:morflutter/display_info/databaseClass.dart';
+import 'package:morflutter/starting_pages/ui/homepage.dart';
 
 class dataVis extends StatefulWidget {
   const dataVis({super.key});
@@ -97,8 +99,13 @@ class _dataVisState extends State<dataVis> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.purple[100],
-        title: Text('Your data'),
+        foregroundColor: lilyPurple,
+        backgroundColor: draculaPurple,
+        title: Image(
+          width: 120,
+          image: AssetImage(
+              'lib/design/logos/principal_morado_negro-removebg-preview.png'),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -106,9 +113,24 @@ class _dataVisState extends State<dataVis> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Icon(
+                Icons.graphic_eq_rounded,
+                color: lilyPurple,
+                shadows: [
+                  Shadow(color: lilyPurple),
+                  Shadow(color: darkPeriwinkle),
+                ],
+                size: 50,
+              ),
+              SizedBox(
+                height: 20,
+              ),
               Text(
-                'Sensor data in real time',
-                style: TextStyle(fontSize: 15),
+                'Telemetría de sensores EMG',
+                style: TextStyle(
+                    fontSize: 18,
+                    color: darkPeriwinkle,
+                    fontFamily: 'Lausane650'),
               ),
               SizedBox(
                 height: 30,
@@ -140,9 +162,9 @@ class _dataVisState extends State<dataVis> {
                       LineChartBarData(
                         color: Colors.amber,
                         gradient: LinearGradient(colors: [
-                          Colors.purple,
-                          Colors.purpleAccent,
-                          Colors.deepPurple
+                          morfoWhite,
+                          darkPeriwinkle,
+                          darkPeriwinkle,
                         ]),
                         isCurved: true,
                         barWidth: 2,
