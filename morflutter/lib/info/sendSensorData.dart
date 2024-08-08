@@ -34,9 +34,10 @@ class _SendsensordataState extends State<Sendsensordata> {
                       icon: Icon(Icons.data_saver_off_rounded)),
                 )
               ],
-              title: Text(
-                'Send sensor data',
-                style: TextStyle(fontSize: 15),
+              title: Image(
+                image: AssetImage(
+                    'lib/design/logos/principal_morado_negro-removebg-preview.png'),
+                width: 100,
               ),
               backgroundColor: Colors.purple[100],
               // go to homepage:

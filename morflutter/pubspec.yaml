@@ -36,5 +36,6 @@ flutter:
   assets:
     - lib/design/logos/rectangular_vino_violette-removebg-preview-2.png
     - lib/design/logos/cuadrado_blanco_trippypurple-removebg-preview.png
+    - lib/design/logos/principal_morado_negro-removebg-preview.png
 
     

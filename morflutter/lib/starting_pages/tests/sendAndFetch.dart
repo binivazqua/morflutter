@@ -26,7 +26,11 @@ class _SendAndfetchState extends State<SendAndfetch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        actions: [
+          Image(
+              image: AssetImage(
+                  'lib/design/logos/principal_morado_negro-removebg-preview.png'))
+        ],
       ),
       body: Center(
         child: Padding(
