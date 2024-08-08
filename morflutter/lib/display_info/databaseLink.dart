@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:morflutter/design/constants.dart';
 import 'package:morflutter/display_info/databaseClass.dart';
 import 'package:morflutter/display_info/sensorData.dart';
 
@@ -96,8 +97,12 @@ class _databaseReadTestState extends State<databaseReadTest> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.purple[200],
-        title: Text('Fetch data from database'),
+        backgroundColor: lilyPurple,
+        title: Image(
+            image: AssetImage(
+              'lib/design/logos/rectangular_vino_trippypurplep.png',
+            ),
+            width: 120),
         actions: [
           Padding(
               padding: const EdgeInsets.only(right: 10),
@@ -106,7 +111,10 @@ class _databaseReadTestState extends State<databaseReadTest> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => dataVis()));
                   },
-                  icon: Icon(Icons.graphic_eq)))
+                  icon: Icon(
+                    Icons.graphic_eq,
+                    color: draculaPurple,
+                  )))
         ],
       ),
       body: Center(
@@ -121,10 +129,15 @@ class _databaseReadTestState extends State<databaseReadTest> {
                   height: 20,
                 ),
                 Text(
-                  'Mi expediente:',
-                  style: TextStyle(fontSize: 20),
+                  'Lecturas previas:',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Lausane650',
+                      color: draculaPurple),
                 ),
-
+                SizedBox(
+                  height: 30,
+                ),
                 /**
                  * USING A STREAM BUILDER AS AN EVENT LISTENER:
                  */
@@ -153,7 +166,12 @@ class _databaseReadTestState extends State<databaseReadTest> {
                         itemBuilder: (context, index) {
                           final sensorData = sensorDataList[index];
                           return ListTile(
-                            title: Text(sensorData.time),
+                            title: Text(
+                              sensorData.time,
+                              style: TextStyle(
+                                  fontFamily: 'Lausane650',
+                                  color: darkPeriwinkle),
+                            ),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: sensorData.muscleData.map((reading) {

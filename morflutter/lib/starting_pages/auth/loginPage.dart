@@ -97,7 +97,7 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                       textController: _passwordController,
                       p: 25),
 
-                  SizedBox(height: 20),
+                  SizedBox(height: 45),
 
                   GestureDetector(
                     onTap: signIn,

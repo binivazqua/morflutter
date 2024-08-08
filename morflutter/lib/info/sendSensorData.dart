@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:morflutter/design/constants.dart';
 import 'package:morflutter/display_info/databaseLink.dart';
 import 'package:morflutter/display_info/sensorData.dart';
 import 'package:morflutter/starting_pages/tests/tabSendData.dart';
@@ -31,15 +32,18 @@ class _SendsensordataState extends State<Sendsensordata> {
                             MaterialPageRoute(
                                 builder: (context) => databaseReadTest()));
                       },
-                      icon: Icon(Icons.data_saver_off_rounded)),
+                      icon: Icon(
+                        Icons.data_saver_off_rounded,
+                        color: draculaPurple,
+                      )),
                 )
               ],
               title: Image(
                 image: AssetImage(
-                    'lib/design/logos/principal_morado_negro-removebg-preview.png'),
+                    'lib/design/logos/rectangular_vino_trippypurplep.png'),
                 width: 100,
               ),
-              backgroundColor: Colors.purple[100],
+              backgroundColor: lilyPurple,
               // go to homepage:
               leading: IconButton(
                   onPressed: () {
@@ -48,18 +52,30 @@ class _SendsensordataState extends State<Sendsensordata> {
                         MaterialPageRoute(
                             builder: (context) => OnBoardingScreen()));
                   },
-                  icon: Icon(Icons.home_filled)),
+                  icon: Icon(
+                    Icons.home_filled,
+                    color: draculaPurple,
+                  )),
               bottom: TabBar(tabs: [
                 Tab(
-                  icon: Icon(Icons.boy_rounded),
+                  icon: Icon(
+                    Icons.back_hand_rounded,
+                    color: draculaPurple,
+                  ),
                   text: 'sensor 1',
                 ),
                 Tab(
-                  icon: Icon(Icons.boy_rounded),
+                  icon: Icon(
+                    Icons.back_hand_rounded,
+                    color: draculaPurple,
+                  ),
                   text: 'sensor 2',
                 ),
                 Tab(
-                  icon: Icon(Icons.boy_rounded),
+                  icon: Icon(
+                    Icons.back_hand_rounded,
+                    color: draculaPurple,
+                  ),
                   text: 'sensor 3',
                 )
               ]),

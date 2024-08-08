@@ -29,7 +29,7 @@ class _SendAndfetchState extends State<SendAndfetch> {
         actions: [
           Image(
               image: AssetImage(
-                  'lib/design/logos/principal_morado_negro-removebg-preview.png'))
+                  'morflutter/lib/design/logos/rectangular_vino_trippypurplep.png'))
         ],
       ),
       body: Center(
