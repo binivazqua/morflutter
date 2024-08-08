@@ -112,13 +112,9 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                       decoration: BoxDecoration(
-                          //color: darkPeriwinkle,
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topRight,
-                              colors: [darkPeriwinkle, draculaPurple]),
+                          color: darkPeriwinkle,
                           boxShadow: [
-                            //BoxShadow(color: lilyPurple, blurRadius: 5)
+                            BoxShadow(color: morfoWhite, blurRadius: 5)
                           ],
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
@@ -137,10 +133,10 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 45, vertical: 10),
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topRight,
-                              colors: [darkPeriwinkle, draculaPurple]),
+                          color: darkPeriwinkle,
+                          boxShadow: [
+                            BoxShadow(color: morfoWhite, blurRadius: 5)
+                          ],
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
                         'Register',
