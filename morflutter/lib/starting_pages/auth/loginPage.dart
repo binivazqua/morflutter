@@ -57,19 +57,14 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.handshake_outlined,
-                    size: 80,
-                    color: lilyPurple,
+                  Image(
+                    image: AssetImage(
+                        'lib/design/logos/cuadrado_blanco_trippypurple-removebg-preview.png'),
+                    width: 150,
                   ),
 
                   Text(
-                    'MORFO',
-                    style: TextStyle(color: morfoWhite, fontSize: 25),
-                  ),
-
-                  Text(
-                    'Hello Again!',
+                    '¡Hola de nuevo!',
                     style: TextStyle(color: morfoWhite, fontSize: 15),
                   ),
 
@@ -90,7 +85,7 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                   // USERNAME
                   niceTextField(
                       dataRequired: 'Email',
-                      textController: _passwordController,
+                      textController: _emailController,
                       p: 25),
 
                   SizedBox(
@@ -120,7 +115,7 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                       child: Text(
                         'Sign In',
                         style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                            color: Colors.white, fontFamily: 'Lausane650'),
                       ),
                     ),
                   ),
@@ -139,8 +134,9 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                           ],
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
-                        'Register',
-                        style: TextStyle(color: Colors.white),
+                        'Registro',
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: 'Lausane650'),
                       ),
                     ),
                   )

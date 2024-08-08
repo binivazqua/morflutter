@@ -45,6 +45,7 @@ class MainApp extends StatelessWidget {
     //return SendAndfetch();
 
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'Lausane400'),
       home: FutureBuilder(
           future: myApp,
           builder: (context, snapshot) {

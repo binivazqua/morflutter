@@ -23,3 +23,18 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: Lausane400
+      fonts:
+        - asset: lib/design/fonts/TWKLausanne-400.otf
+    - family: Lausane650
+      fonts:
+        - asset: lib/design/fonts/TWKLausanne-650.otf
+
+
+  assets:
+    - lib/design/logos/rectangular_vino_violette-removebg-preview-2.png
+    - lib/design/logos/cuadrado_blanco_trippypurple-removebg-preview.png
+
+    
