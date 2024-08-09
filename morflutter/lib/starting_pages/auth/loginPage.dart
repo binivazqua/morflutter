@@ -92,10 +92,27 @@ class MorfoLoginPageState extends State<MorfoLoginPage> {
                     height: 20,
                   ),
                   // PASSWORD
-                  niceTextField(
-                      dataRequired: 'Password',
-                      textController: _passwordController,
-                      p: 25),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: lilyPurple,
+                          borderRadius: BorderRadius.circular(12),
+                          gradient: LinearGradient(
+                              colors: [lilyPurple, darkPeriwinkle])),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: TextField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Password',
+                              hintStyle: TextStyle(color: draculaPurple)),
+                        ),
+                      ),
+                    ),
+                  ),
 
                   SizedBox(height: 45),
 
